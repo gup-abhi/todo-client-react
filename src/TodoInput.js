@@ -1,16 +1,20 @@
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
 const TodoInput = ({ todo, setTodo, addTodo }) => {
   return (
-    <div className="input-wrapper">
-      <input
-        type="text"
+    <div className="input-wrapper text-center m-3">
+      <TextField
         name="todo"
         value={todo}
-        placeholder="Create a new todo"
+        className="text-field"
+        label="Create a new todo"
+        variant="outlined"
         onChange={(e) => setTodo(e.target.value)}
       />
-      <button className="add-button" onClick={addTodo}>
+      <Button className="m-2 ml-3" variant="contained" onClick={addTodo}>
         Add
-      </button>
+      </Button>
     </div>
   );
 };

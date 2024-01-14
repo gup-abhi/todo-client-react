@@ -35,15 +35,19 @@ const EditTodoDialog = ({ openState, todo, update }) => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
+      <Button
+        className="mx-2"
+        variant="outlined"
+        color="primary"
+        onClick={handleOpen}
+      >
         Edit
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit Todo</DialogTitle>
+        <DialogTitle className="m-3 p-0">Edit Todo</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
-            margin="dense"
             label="Todo"
             type="text"
             fullWidth
@@ -57,15 +61,19 @@ const EditTodoDialog = ({ openState, todo, update }) => {
             onChange={handleChange}
             aria-label="Todo Complete/Incomplete"
           >
-            <ToggleButton value="true">Complete</ToggleButton>
-            <ToggleButton value="false">Incomplete</ToggleButton>
+            <ToggleButton className="m-2 p-2" value="true">
+              Complete
+            </ToggleButton>
+            <ToggleButton className="m-2 p-2" value="false">
+              Incomplete
+            </ToggleButton>
           </ToggleButtonGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} variant="outlined" color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleUpdate} color="primary">
+          <Button onClick={handleUpdate} variant="outlined" color="primary">
             Update
           </Button>
         </DialogActions>

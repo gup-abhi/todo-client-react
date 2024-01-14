@@ -1,5 +1,14 @@
 import { useState } from "react";
 import EditTodoDialog from "./EditTodoDialog";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Checkbox from "@mui/material/Checkbox";
+import Tooltip from "@mui/material/Tooltip";
+import "bootstrap/dist/css/bootstrap.css";
+import Button from "@mui/material/Button";
 
 const TodoList = ({ list, remove, update }) => {
   const [open, setOpen] = useState(false);
@@ -7,53 +16,60 @@ const TodoList = ({ list, remove, update }) => {
     setOpen(false);
   };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  //   const handleOpen = () => {
+  //     setOpen(true);
+  //   };
 
   return (
     <>
       {list?.length > 0 ? (
-        <ul className="todo-list">
-          {list.map((entry, index) => (
-            <div className="todo" key={index}>
-              <li
-                style={{
-                  textDecoration: entry.done ? "line-through" : "none",
-                }}
-              >
-                {entry.note}
-              </li>
-              <EditTodoDialog
-                open={open}
-                onClose={handleClose}
-                update={update}
-                todo={entry}
-              />
-              {entry.done ? (
-                <button
-                  className="complete-button"
-                  onClick={() => update({ ...entry, done: false })}
-                >
-                  Incomplete
-                </button>
-              ) : (
-                <button
-                  className="complete-button"
-                  onClick={() => update({ ...entry, done: true })}
-                >
-                  Complete
-                </button>
-              )}
-              <button
-                className="delete-button"
-                onClick={() => remove(entry.id)}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </ul>
+        <div className={`m-3 list-wrapper`}>
+          <List className="todo-list">
+            {list.map((entry, index) => (
+              <ListItem disablePadding key={index} className="my-3">
+                <ListItemButton>
+                  <Tooltip title={entry.done ? "Incomplete" : "Complete"}>
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={entry.done}
+                        onClick={() => update({ ...entry, done: !entry.done })}
+                        tabIndex={-1}
+                        disableRipple
+                      />
+                    </ListItemIcon>
+                  </Tooltip>
+                  <ListItemText
+                    style={{
+                      textDecoration: entry.done ? "line-through" : "none",
+                    }}
+                    primary={entry.note}
+                  />
+                  <EditTodoDialog
+                    open={open}
+                    onClose={handleClose}
+                    update={update}
+                    todo={entry}
+                    className="edit-button"
+                  />
+                  {/* <button
+                    className="delete-button"
+                    onClick={() => remove(entry.id)}
+                  >
+                    Delete
+                  </button> */}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => remove(entry.id)}
+                  >
+                    Delete
+                  </Button>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </div>
       ) : (
         <div className="empty">
           <p>No Task found</p>
