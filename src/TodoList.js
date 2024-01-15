@@ -46,18 +46,11 @@ const TodoList = ({ list, remove, update }) => {
                     primary={entry.note}
                   />
                   <EditTodoDialog
-                    open={open}
                     onClose={handleClose}
                     update={update}
                     todo={entry}
                     className="edit-button"
                   />
-                  {/* <button
-                    className="delete-button"
-                    onClick={() => remove(entry.id)}
-                  >
-                    Delete
-                  </button> */}
                   <Button
                     variant="contained"
                     color="secondary"

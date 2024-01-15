@@ -8,8 +8,8 @@ import Button from "@material-ui/core/Button";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-const EditTodoDialog = ({ openState, todo, update }) => {
-  const [open, setOpen] = useState(openState);
+const EditTodoDialog = ({ todo, update }) => {
+  const [open, setOpen] = useState(false);
   const [editedTodo, setEditedTodo] = useState(todo.text);
   const [alignment, setAlignment] = useState(todo.done ? "true" : "false");
 

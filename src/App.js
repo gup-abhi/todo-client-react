@@ -1,9 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import TodoInput from "./TodoInput";
-import TodoList from "./TodoList";
 import axios from "axios";
 import API_BASE_URL from "./config";
+import Home from "./Home";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -77,9 +76,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="text-center fw-bolder">Todo App</h1>
-      <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} />
-      <TodoList list={todos} remove={deleteTodo} update={modifyTodo} />
+      <Home
+        todo={todo}
+        todos={todos}
+        setTodo={setTodo}
+        addTodo={addTodo}
+        deleteTodo={deleteTodo}
+        modifyTodo={modifyTodo}
+      />
     </div>
   );
 }
