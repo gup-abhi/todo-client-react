@@ -9,24 +9,18 @@ import "react-toastify/dist/ReactToastify.css";
 const Home = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const [username, setUsername] = useState(sessionStorage.getItem("username"));
-  const [loading, setLoading] = useState(false);
+  const [username] = useState(sessionStorage.getItem("username"));
 
   const notify = (message) => toast(message);
 
   useEffect(() => {
-    const fetch = async () => {
-      const newTodos = await fetchData();
-      setTodos(newTodos);
-    };
-
-    fetch();
+    fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/note/${username}`);
-      return response.data;
+      setTodos(response.data);
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error fetching data: ", error.response.data.message);
@@ -64,22 +58,11 @@ const Home = () => {
       const response = await axios.delete(`${API_BASE_URL}/note/${id}`);
       console.log(`deleteTodo - ${JSON.stringify(response.data)}`);
       notify(response.data.msg);
+      setTodos(todos.filter((todo) => todo.id !== id));
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error deleting todo: ", error.response.data.message);
     }
-  };
-
-  const modifyTodo = async (note) => {
-    console.log(`note - ${JSON.stringify(note)}`);
-    setTodos(
-      todos.map((todo) =>
-        todo.id === note.id
-          ? { ...todo, done: note.done, note: note.note }
-          : todo
-      )
-    );
-    updateTodo(note);
   };
 
   const updateTodo = async (note) => {
@@ -88,6 +71,13 @@ const Home = () => {
       const response = await axios.put(`${API_BASE_URL}/note/${note.id}`, note);
       console.log(`updateTodo after - ${JSON.stringify(response.data)}`);
       notify(response.data.msg);
+      setTodos(
+        todos.map((todo) =>
+          todo.id === note.id
+            ? { ...todo, done: note.done, note: note.note }
+            : todo
+        )
+      );
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error updating todo", error.response.data.message);
@@ -98,7 +88,7 @@ const Home = () => {
     <div className="home">
       <h1 className="text-center fw-bolder">Todo App</h1>
       <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} />
-      <TodoList list={todos} remove={deleteTodo} update={modifyTodo} />
+      <TodoList list={todos} remove={deleteTodo} update={updateTodo} />
     </div>
   );
 };
