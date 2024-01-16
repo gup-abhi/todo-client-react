@@ -34,18 +34,18 @@ const EditTodoDialog = ({ todo, update }) => {
   };
 
   return (
-    <div>
+    <>
       <Button
         className="mx-2"
-        variant="outlined"
+        variant="contained"
         color="primary"
         onClick={handleOpen}
       >
         Edit
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog sx={{ maxWidth: 1 }} open={open} onClose={handleClose}>
         <DialogTitle className="m-3 p-0">Edit Todo</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ width: "75%" }}>
           <TextField
             autoFocus
             label="Todo"
@@ -78,7 +78,7 @@ const EditTodoDialog = ({ todo, update }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

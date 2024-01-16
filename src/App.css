@@ -9,3 +9,12 @@ body {
   text-rendering: optimizeSpeed;
   font-family: "Roboto", sans-serif;
 }
+
+.card {
+  box-shadow: 5px 5px 4px gray;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: none;
+}
