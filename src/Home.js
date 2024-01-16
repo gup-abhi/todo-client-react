@@ -10,17 +10,23 @@ const Home = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
+  const [loading, setLoading] = useState(false);
 
   const notify = (message) => toast(message);
 
   useEffect(() => {
-    fetchData();
+    const fetch = async () => {
+      const newTodos = await fetchData();
+      setTodos(newTodos);
+    };
+
+    fetch();
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/note/${username}`);
-      setTodos(response.data);
+      return response.data;
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error fetching data: ", error.response.data.message);
@@ -37,6 +43,7 @@ const Home = () => {
         body
       );
       console.log(`postTodo - ${JSON.stringify(response.data)}`);
+      notify(response.data.msg);
       return response.data;
     } catch (error) {
       notify(error.response.data.message);
@@ -56,7 +63,7 @@ const Home = () => {
     try {
       const response = await axios.delete(`${API_BASE_URL}/note/${id}`);
       console.log(`deleteTodo - ${JSON.stringify(response.data)}`);
-      fetchData();
+      notify(response.data.msg);
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error deleting todo: ", error.response.data.message);
@@ -80,6 +87,7 @@ const Home = () => {
     try {
       const response = await axios.put(`${API_BASE_URL}/note/${note.id}`, note);
       console.log(`updateTodo after - ${JSON.stringify(response.data)}`);
+      notify(response.data.msg);
     } catch (error) {
       notify(error.response.data.message);
       console.error("Error updating todo", error.response.data.message);
