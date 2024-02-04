@@ -2,8 +2,8 @@ import "./App.css";
 import Home from "./Home";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import PrivateRoutes from "./PriivateRoutes";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PrivateRoutes from "./PrivateRoutes";
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -11,11 +11,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Home />} />
-          </Route>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<PrivateRoutes />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
